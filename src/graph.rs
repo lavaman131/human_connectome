@@ -25,9 +25,15 @@ impl WeightedGraph {
         adjacency_matrix
     }
 
-    pub fn count_cycles(&self, n: usize) -> i32 {
+    pub fn count_n_cycles(&self, n: usize) -> i32 {
         let graph: Vec<Vec<i32>> = self.get_adjacency_matrix();
         let V: usize = graph.len();
+
+        // validate input
+        if V < n {
+            return 0;
+        }
+
         let mut marked: Vec<bool> = vec![false; V];
         let mut count: i32 = 0;
         for i in 0..(V - (n - 1)) {
@@ -65,5 +71,28 @@ impl WeightedGraph {
         }
         marked[vertex] = false;
         count
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::WeightedGraph;
+    #[test]
+    fn check_n_cycles() {
+        let graph: WeightedGraph = WeightedGraph::new(vec![
+            vec![0.0, 1.0, 1.0],
+            vec![1.0, 0.0, 1.0],
+            vec![1.0, 1.0, 0.0],
+        ]);
+        assert_eq!(1, graph.count_n_cycles(3));
+
+        let graph2: WeightedGraph = WeightedGraph::new(vec![
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+            vec![1.0, 0.0, 1.0, 0.0, 1.0],
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+            vec![1.0, 0.0, 1.0, 0.0, 1.0],
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+        ]);
+        assert_eq!(3, graph2.count_n_cycles(4));
     }
 }
