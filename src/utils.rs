@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
+use std::fs::{create_dir, File};
 use std::io::{BufRead, BufReader, BufWriter, Write};
 
 pub fn matrix_parser(path: &str) -> Vec<Vec<f64>> {
@@ -20,11 +20,14 @@ pub fn matrix_parser(path: &str) -> Vec<Vec<f64>> {
 }
 
 pub fn save_results(
+    folder: &str,
     edge_weights: &HashMap<usize, HashMap<(usize, usize), Vec<f64>>>,
 ) -> std::io::Result<()> {
+    create_dir(folder).expect("Failed to create folder.");
     for (k, d) in edge_weights.iter() {
-        let file = File::create(String::from("face_weights_") + &k.to_string() + "_cycles.txt")
-            .expect("Failed to create file.");
+        let file =
+            File::create(String::from(folder) + "/face_weights_" + &k.to_string() + "_cycles.txt")
+                .expect("Failed to create file.");
         let mut writer = BufWriter::new(file);
         for (key, val) in d.iter() {
             let weights = val
