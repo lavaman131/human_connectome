@@ -70,8 +70,8 @@ impl WeightedGraph {
         if count != 0 {
             // only return non-duplicate edges (doesn't matter but choose the first cycle to keep)
             let mut duplicates_removed: Vec<Vec<(usize, usize)>> = Vec::new();
-            for i in valid_edges_list.iter().step_by(2) {
-                duplicates_removed.push(i.clone());
+            for i in valid_edges_list.into_iter().step_by(2) {
+                duplicates_removed.push(i);
             }
             return (count / 2, duplicates_removed);
         }
