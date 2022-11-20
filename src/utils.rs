@@ -1,6 +1,7 @@
 use std::collections::HashMap;
-use std::fs::{create_dir, File};
+use std::fs::{File, self};
 use std::io::{BufRead, BufReader, BufWriter, Write};
+use std::path::Path;
 
 pub fn matrix_parser(path: &str) -> Vec<Vec<f64>> {
     let file = File::open(path).expect("Failed to read file.");
@@ -23,7 +24,9 @@ pub fn save_results(
     folder: &str,
     edge_weights: &HashMap<usize, HashMap<(usize, usize), Vec<f64>>>,
 ) -> std::io::Result<()> {
-    create_dir(folder).expect("Failed to create folder.");
+    if let false = Path::new(folder).exists() {
+        fs::create_dir(folder).expect("Failed to create folder.");
+    }
     for (k, d) in edge_weights.iter() {
         let file =
             File::create(String::from(folder) + "/face_weights_" + &k.to_string() + "_cycles.txt")
