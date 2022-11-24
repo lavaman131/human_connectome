@@ -44,6 +44,17 @@ impl WeightedGraph {
         adjacency_list
     }
 
+    pub fn get_incident_edges(&self) -> HashMap<usize, Vec<(usize, usize)>> {
+        let adj_list: Vec<Vec<usize>> = self.get_adjacency_list();
+        let mut incident_edges: HashMap<usize, Vec<(usize, usize)>> = HashMap::new();
+        for u in 0..adj_list.len() {
+            for v in 0..adj_list[u].len() {
+                incident_edges.entry(v).or_insert(Vec::new()).push((u, v));
+            }
+        }
+        incident_edges
+    }
+
     pub fn get_face_weights(
         &self,
         edges_hashmap: &HashMap<usize, Vec<Vec<(usize, usize)>>>,

@@ -100,6 +100,26 @@ pub mod save_data {
         }
         Ok(())
     }
+
+    pub fn save_incident_edges(
+        folder: &str,
+        incident_edges: &HashMap<usize, Vec<(usize, usize)>>,
+    ) -> std::io::Result<()> {
+        let file = File::create(Path::new(
+            (String::from(folder) + "/incident_edges_" + ".txt").as_str(),
+        ))
+        .expect("Failed to create file.");
+        let mut writer = BufWriter::new(file);
+        for (k, v) in incident_edges {
+            let mut v = v
+                .iter()
+                .map(|x| format!("{:?}", x))
+                .collect::<Vec<String>>();
+            v.insert(0, k.to_string());
+            writeln!(&mut writer, "{:?}", v.join(" ")).expect("Failed to write line.");
+        }
+        Ok(())
+    }
 }
 
 pub mod load_data {
