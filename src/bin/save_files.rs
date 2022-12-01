@@ -1,43 +1,59 @@
 extern crate human_connectome;
 pub use human_connectome::graph::WeightedGraph;
-pub use human_connectome::utils;
 use std::collections::HashMap;
 use std::{process, vec};
 
 fn main() {
-    let matrix: Vec<Vec<f64>> = utils::load_data::matrix_parser(
-        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/ASD38D_DTI_connectivity_matrix_file.txt",
+    let mut graph_asd: WeightedGraph = WeightedGraph::new_from_all(
+        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/",
+        "ASD",
     );
-    let graph: WeightedGraph = WeightedGraph::new(matrix);
+    graph_asd.sparsify_matrix(0.2);
+    save_graph_stats(&graph_asd, "ASD");
+
+    let mut graph_td: WeightedGraph = WeightedGraph::new_from_all(
+        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/",
+        "TD",
+    );
+    graph_td.sparsify_matrix(0.2);
+    save_graph_stats(&graph_td, "TD");
+}
+
+fn save_graph_stats(graph: &WeightedGraph, patient_code: &str) {
     let edges_hashmap: HashMap<usize, Vec<Vec<(usize, usize)>>> =
         graph.get_edges_hashmap(vec![3, 4, 5]);
-    let incident_edges: HashMap<usize, Vec<(usize, usize)>> = graph.get_incident_edges();
 
-    if let Err(e) = utils::save_data::save_face_weights(
-        "/Users/alilavaee/Documents/DS210/human_connectome/results",
-        &graph.get_face_weights(&edges_hashmap),
-    ) {
-        println!("Failed with error: {e}");
-        process::exit(1);
-    }
-    if let Err(e) = utils::save_data::save_face_edges(
-        "/Users/alilavaee/Documents/DS210/human_connectome/results",
-        &edges_hashmap,
-    ) {
-        println!("Failed with error: {e}");
-        process::exit(1);
-    }
-    if let Err(e) = utils::save_data::save_parallel_edges(
-        "/Users/alilavaee/Documents/DS210/human_connectome/results",
-        &edges_hashmap,
+    if let Err(e) = graph.save_edges(
+        &("/Users/alilavaee/Documents/DS210/human_connectome/results/".to_owned() + patient_code),
     ) {
         println!("Failed with error: {e}");
         process::exit(1);
     }
 
-    if let Err(e) = utils::save_data::save_incident_edges(
-        "/Users/alilavaee/Documents/DS210/human_connectome/results",
-        &incident_edges,
+    if let Err(e) = graph.save_face_weights(
+        &("/Users/alilavaee/Documents/DS210/human_connectome/results/".to_owned() + patient_code),
+        &edges_hashmap,
+    ) {
+        println!("Failed with error: {e}");
+        process::exit(1);
+    }
+    if let Err(e) = graph.save_face_edges(
+        &("/Users/alilavaee/Documents/DS210/human_connectome/results/".to_owned() + patient_code),
+        &edges_hashmap,
+    ) {
+        println!("Failed with error: {e}");
+        process::exit(1);
+    }
+    if let Err(e) = graph.save_parallel_edges(
+        &("/Users/alilavaee/Documents/DS210/human_connectome/results/".to_owned() + patient_code),
+        &edges_hashmap,
+    ) {
+        println!("Failed with error: {e}");
+        process::exit(1);
+    }
+
+    if let Err(e) = graph.save_incident_edges(
+        &("/Users/alilavaee/Documents/DS210/human_connectome/results/".to_owned() + patient_code),
     ) {
         println!("Failed with error: {e}");
         process::exit(1);
