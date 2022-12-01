@@ -28,18 +28,29 @@ fn main() {
         "/Users/alilavaee/Documents/DS210/human_connectome/results/TD/",
     );
 
-    let curvature_diff: HashMap<String, f64> = get_curvature_diff(
-        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/region_names.txt",
+    let mut curvature_diff: HashMap<String, f64> = get_curvature_diff(
+        "/Users/alilavaee/Documents/DS210/human_connectome/region_names.txt",
         &curvatures_asd,
         &curvatures_td,
     );
 
-    // println!("{:?}", curvature_diff);
+    println!("All nonzero curvature differences:");
     for (k, v) in curvature_diff.iter() {
         if *v != 0.0 {
-            println!("Region: {}", k);
-            println!("Curvature Difference: {}", v);
+            println!("Region: {}\tCurvature Difference: {}", k, v);
         }
+    }
+
+    // find mean and standard deviation of curvature differences
+    let diffs: Vec<f64> = curvature_diff.values().cloned().collect();
+    let mu: f64 = stats::mean(&diffs);
+    let sigma: f64 = stats::std_dev(&diffs);
+
+    println!("Statistically significant curvature differences:");
+    // filter out by at least 2 standard deviations (statistically significant) away from the mean
+    curvature_diff.retain(|_, v| v.abs() >= (mu + 2.0 * sigma));
+    for (k, v) in curvature_diff.iter() {
+        println!("Region: {}\tCurvature Difference: {}", k, v);
     }
 }
 
@@ -95,13 +106,6 @@ pub fn get_curvature_diff(
         // typically_developing - autism_developed
         curvature_diff.insert(label, c_td - c_asd);
     }
-    // find mean and standard deviation of curvature differences
-    let diffs: Vec<f64> = curvature_diff.values().cloned().collect();
-    let mu: f64 = stats::mean(&diffs);
-    let sigma: f64 = stats::std_dev(&diffs);
-
-    // filter out by 2 standard deviations from the mean
-    curvature_diff.retain(|_, v| v.abs() <= (mu + 2.0 * sigma));
 
     curvature_diff
 }
