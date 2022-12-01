@@ -15,7 +15,7 @@ In this project, the connectivity matrices of patients diagnosed with autism spe
 ## Statistical Analysis
 This analysis relies on a simplified 2-complex based order d Forman–Ricci curvature of an edge $e = \{u, v\} \in E$ is given by:
 
-$\mathfrak{C}_G^{2, d}(e) \stackrel{\text { def }}{=} \mathfrak{C}_G^{2, d}(u, v)=\omega(e)\left[\left(\sum_{e \sim f_d^2} \frac{\omega(e)}{\omega\left(f_d^2\right)}+\sum_{v \sim e} \frac{\omega(v)}{\omega(e)}\right)-\sum_{e^{\prime} \| e, e^{\prime}, e \sim f_d^2} \frac{\sqrt{\omega(e) \omega\left(e^{\prime}\right)}}{\omega\left(f_d^2\right)}\right]$
+$$\mathfrak{C}_G^{2, d}(e) \stackrel{\text { def }}{=} \mathfrak{C}_G^{2, d}(u, v)=\omega(e)\left[\left(\sum_{e \sim f_d^2} \frac{\omega(e)}{\omega\left(f_d^2\right)}+\sum_{v \sim e} \frac{\omega(v)}{\omega(e)}\right)-\sum_{e^{\prime} \| e, e^{\prime}, e \sim f_d^2} \frac{\sqrt{\omega(e) \omega\left(e^{\prime}\right)}}{\omega\left(f_d^2\right)}\right]$$
 
 The difference of the curvatures is found between a pair of autism spectrum disorder (ASD) and typically developing (TD) autism connectivity matrices each constructed by taking the aggregated mean of all such similar samples corresponding to each diagnosis.
 
