@@ -23,35 +23,47 @@ More information about the methodology can be found in the following paper:
 https://www.nature.com/articles/s41598-021-87587-z
 
 ## Results
-### All nonzero curvature differences
-| Region                                         | Curvature Difference |
-| ---------------------------------------------- | -------------------- |
-| Right Juxtapositional Lobule Cortex            | -7074.627324268871   |
-| Right Pallidum                                 | -4627.960045217761   |
-| Right Inferior Frontal Gyrus pars triangularis | -4530.6795865866325  |
-| Right Central Opercular Cortex                 | -3888.4297739512394  |
-| Brain-Stem                                     | 2419.6440218672715   |
-| Right Thalamus                                 | 4013.0091411239337   |
-| Right Middle Frontal Gyrus                     | 4978.582665601203    |
 
-### Statistically significant curvature differences
-| Region                                         | Curvature Difference |
-| ---------------------------------------------- | -------------------- |
-| Right Juxtapositional Lobule Cortex            | -7074.627324268871   |
-| Right Pallidum                                 | -4627.960045217761   |
-| Right Inferior Frontal Gyrus pars triangularis | -4530.6795865866325  |
-| Right Central Opercular Cortex                 | -3888.4297739512394  |
-| Right Thalamus                                 | 4013.0091411239337   |
-| Right Middle Frontal Gyrus                     | 4978.582665601203    |
+### Top 10 Statistically Significant Curvature Differences
+<p style="color:red">
+It is important to note that some connections may occur in the same region of the brain, hence it may seem like a vertex is connected to itself which is not the case.
+</p>
+
+#### 5 Most Negative Curvatures 
+
+| Connected Region                                 | Curvature Difference |
+| ------------------------------------------------ | -------------------- |
+| Right Putamen, Right Insular Cortex              | -2331330.433152141   |
+| Right Insular Cortex, Right Insular Cortex       | -1994182.8538039196  |
+| Right Frontal Pole, Right Frontal Orbital Cortex | -1845748.8731592936  |
+| Right Frontal Pole, Right Frontal Pole           | -1716334.5267126393  |
+| Right Insular Cortex, Right Insular Cortex       | -1614932.5721171317  |
+
+#### 5 Most Positive Curvatures 
+| Connected Region                                                                             | Curvature Difference |
+| -------------------------------------------------------------------------------------------- | -------------------- |
+| Left Central Opercular Cortex, Left Central Opercular Cortex                                 | 1934234.5367499162   |
+| Right Insular Cortex, Right Putamen                                                          | 1971224.916725241    |
+| Left Thalamus, Brain-Stem                                                                    | 2294358.294582237    |
+| Right Frontal Pole, Right Frontal Orbital Cortex                                             | 2565673.39796964     |
+| Left Middle Temporal Gyrus posterior division, Left Middle Temporal Gyrus posterior division | 3425965.9113210947   |
 
 ## Discussion
-The six regions of the brain yielding statistically significant results (from most significant to least significant) towards the development of autism are:
-1. Right Juxtapositional Lobule Cortex   
-2. Right Middle Frontal Gyrus          
-3. Right Pallidum                                 
-4. Right Inferior Frontal Gyrus pars triangularis             
-5. Right Thalamus   
-6. Right Central Opercular Cortex    
+The ten connections between the brain yielding statistically significant results (from most significant to least significant) towards the development of autism are:
+
+1. Left Middle Temporal Gyrus posterior division, Left Middle Temporal Gyrus posterior division 
+2. Right Frontal Pole, Right Frontal Orbital Cortex
+3. Right Putamen, Right Insular Cortex   
+4. Left Thalamus, Brain-Stem     
+5. Right Insular Cortex, Right Insular Cortex   
+5. Right Insular Cortex, Right Putamen   
+6. Left Central Opercular Cortex, Left Central Opercular Cortex 
+8. Right Frontal Pole, Right Frontal Orbital Cortex
+7. Right Frontal Pole, Right Frontal Pole
+9. Right Insular Cortex, Right Insular Cortex    
+   
+## Collaborators
+* Dr. Tanima Chatterjee
 
 ## References
 Chatterjee, T., Albert, R., Thapliyal, S. *et al.* Detecting network anomalies using Forman–Ricci curvature and a case study for human brain networks. *Sci Rep* **11**, 8121 (2021). https://doi.org/10.1038/s41598-021-87587-z

@@ -526,9 +526,9 @@ impl WeightedGraph {
         face_weights: &HashMap<usize, HashMap<(usize, usize), Vec<f64>>>,
         incident_edges: &HashMap<usize, Vec<(usize, usize)>>,
         parallel_edges: &HashMap<usize, HashMap<(usize, usize), Vec<(usize, usize)>>>,
-    ) -> Vec<f64> {
+    ) -> HashMap<(usize, usize), f64> {
         // store curvatures for every edge
-        let mut curvatures: Vec<f64> = Vec::new();
+        let mut curvatures: HashMap<(usize, usize), f64> = HashMap::new();
         // for all edges
         for edge in edges.iter() {
             // store sum in var a
@@ -552,7 +552,7 @@ impl WeightedGraph {
                     // take w(edge)
                     let w_e: f64 = weighted_adjacency_matrix[edge.0][edge.1];
                     // a += weight of edge / weight of the face edge is a part of
-                    a += w_e / face_weight;
+                    a += (w_e / face_weight).abs();
 
                     // for all parallel edges in that face
                     if n_cycles != 3 {
@@ -560,7 +560,7 @@ impl WeightedGraph {
                             for p_e in p_edges.iter() {
                                 // take w(parallel edge)
                                 let w_p_e: f64 = weighted_adjacency_matrix[p_e.0][p_e.1];
-                                c += (w_e * w_p_e).sqrt() / face_weight;
+                                c += ((w_e * w_p_e).abs()).sqrt() / face_weight.abs();
                             }
                         }
                     }
@@ -571,15 +571,18 @@ impl WeightedGraph {
                     let mut w_v = 0.0;
                     for list_incident_edge in incident_edges.get(v).iter() {
                         for incident_edge in list_incident_edge.iter() {
-                            w_v += weighted_adjacency_matrix[incident_edge.0][incident_edge.1];
+                            w_v += (weighted_adjacency_matrix[incident_edge.0][incident_edge.1]).abs();
                         }
                         w_v /= list_incident_edge.len() as f64;
                     }
                     // then divide w(vertex) by edge w(edge) in outermost loop
-                    b += w_v / weighted_adjacency_matrix[edge.0][edge.1];
+                    b += w_v / weighted_adjacency_matrix[edge.0][edge.1].abs();
                 }
             }
-            curvatures.push(a + b - c);
+            curvatures.insert(
+                *edge,
+                weighted_adjacency_matrix[edge.0][edge.1].abs() * (a + b - c),
+            );
         }
         curvatures
     }

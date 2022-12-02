@@ -1,7 +1,6 @@
 extern crate human_connectome;
 pub use human_connectome::graph::WeightedGraph;
 pub use human_connectome::stats;
-use itertools::izip;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -28,36 +27,55 @@ fn main() {
         "/Users/alilavaee/Documents/DS210/human_connectome/results/TD/",
     );
 
-    let mut curvature_diff: HashMap<String, f64> = get_curvature_diff(
+    let curvature_diff: Vec<(String, String, f64)> = get_curvature_diff(
         "/Users/alilavaee/Documents/DS210/human_connectome/region_names.txt",
         &curvatures_asd,
         &curvatures_td,
     );
 
-    println!("All nonzero curvature differences:");
-    for (k, v) in curvature_diff.iter() {
-        if *v != 0.0 {
-            println!("Region: {}\tCurvature Difference: {}", k, v);
-        }
-    }
-
     // find mean and standard deviation of curvature differences
-    let diffs: Vec<f64> = curvature_diff.values().cloned().collect();
+    let mut diffs: Vec<f64> = Vec::new();
+    for d in curvature_diff.iter() {
+        diffs.push(d.2);
+    }
     let mu: f64 = stats::mean(&diffs);
     let sigma: f64 = stats::std_dev(&diffs);
 
-    println!("Statistically significant curvature differences:");
     // filter out by at least 2 standard deviations (statistically significant) away from the mean
-    curvature_diff.retain(|_, v| v.abs() >= (mu + 2.0 * sigma));
-    for (k, v) in curvature_diff.iter() {
-        println!("Region: {}\tCurvature Difference: {}", k, v);
+    let mut filtered_curvature_diffs: Vec<(String, String, f64)> = Vec::new();
+    for c_diff in curvature_diff.iter() {
+        if c_diff.2.abs() >= (mu + 2.0 * sigma) {
+            filtered_curvature_diffs.push(c_diff.clone());
+        }
+    }
+
+    filtered_curvature_diffs.sort_by(|a, b| a.2.partial_cmp(&b.2).unwrap());
+
+    println!("Top 10 Statistically significant curvature differences:");
+
+    println!("5 Most Negative Curvatures:");
+    for c_diff in filtered_curvature_diffs[..5].iter() {
+        println!(
+            "Regions: {:?}\tCurvature Difference: {}",
+            (&c_diff.0, &c_diff.1),
+            c_diff.2
+        );
+    }
+
+    println!("5 Most Positive Curvatures:");
+    for c_diff in filtered_curvature_diffs[filtered_curvature_diffs.len() - 5..].iter() {
+        println!(
+            "Regions: {:?}\tCurvature Difference: {}",
+            (&c_diff.0, &c_diff.1),
+            c_diff.2
+        );
     }
 }
 
 pub fn load_and_calc_curvature(
     weighted_adjacency_matrix: &Vec<Vec<f64>>,
     folder: &str,
-) -> Vec<f64> {
+) -> HashMap<(usize, usize), f64> {
     let edges: Vec<(usize, usize)> = WeightedGraph::load_edges(&(folder.to_owned() + "edges.txt"));
 
     let face_weights: HashMap<usize, HashMap<(usize, usize), Vec<f64>>> =
@@ -77,7 +95,7 @@ pub fn load_and_calc_curvature(
     let incident_edges: HashMap<usize, Vec<(usize, usize)>> =
         WeightedGraph::load_incident_edges(&(folder.to_owned() + "incident_edges.txt"));
 
-    let curvatures: Vec<f64> = WeightedGraph::calculate_curvature(
+    let curvatures: HashMap<(usize, usize), f64> = WeightedGraph::calculate_curvature(
         &weighted_adjacency_matrix,
         &edges,
         &face_weights,
@@ -90,9 +108,9 @@ pub fn load_and_calc_curvature(
 
 pub fn get_curvature_diff(
     curvature_labels_file_path: &str,
-    curvatures_asd: &Vec<f64>,
-    curvatures_td: &Vec<f64>,
-) -> HashMap<String, f64> {
+    curvatures_asd: &HashMap<(usize, usize), f64>,
+    curvatures_td: &HashMap<(usize, usize), f64>,
+) -> Vec<(String, String, f64)> {
     let file = File::open(curvature_labels_file_path).expect("Failed to read file.");
     let reader = BufReader::new(file);
     let mut region_names: Vec<String> = Vec::new();
@@ -101,10 +119,15 @@ pub fn get_curvature_diff(
             region_names.push(val);
         }
     }
-    let mut curvature_diff: HashMap<String, f64> = HashMap::new();
-    for (c_asd, c_td, label) in izip!(curvatures_asd, curvatures_td, region_names) {
+
+    let mut curvature_diff: Vec<(String, String, f64)> = Vec::new();
+    for k in curvatures_asd.keys() {
         // typically_developing - autism_developed
-        curvature_diff.insert(label, c_td - c_asd);
+        curvature_diff.push((
+            region_names[k.0].clone(),
+            region_names[k.1].clone(),
+            curvatures_td[k] - curvatures_asd[k],
+        ));
     }
 
     curvature_diff
