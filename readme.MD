@@ -1,6 +1,20 @@
 # Human Connectome
 <img src="images/human_connectome.jpeg" style="width:50rem; display: block; margin-left: auto; margin-right: auto;"></img>
 
+- [Human Connectome](#human-connectome)
+  - [Inspiration](#inspiration)
+  - [Dataset](#dataset)
+  - [Statistical Analysis](#statistical-analysis)
+  - [Results](#results)
+    - [Top 10 Statistically Significant Curvature Differences](#top-10-statistically-significant-curvature-differences)
+      - [5 Most Negative Curvatures](#5-most-negative-curvatures)
+      - [5 Most Positive Curvatures](#5-most-positive-curvatures)
+  - [Discussion](#discussion)
+    - [Connections Visualized](#connections-visualized)
+  - [Collaborators](#collaborators)
+  - [References](#references)
+
+
 ## Inspiration
 Brain connectomics or brain network research has rapidly expanded using functional MRI (fMRI) and diffusion-weighted MRI (dwMRI). A common product of these varied analyses is a connectivity matrix (CM). A CM stores the connection strength between any two regions ("nodes") in a brain network. This format is useful for several reasons: 
 1. it is highly distilled, with minimal data size and complexity
