@@ -60,8 +60,11 @@ The ten connections between the brain yielding statistically significant results
 6. Left Central Opercular Cortex, Left Central Opercular Cortex 
 8. Right Frontal Pole, Right Frontal Orbital Cortex
 7. Right Frontal Pole, Right Frontal Pole
-9. Right Insular Cortex, Right Insular Cortex    
-   
+9. Right Insular Cortex, Right Insular Cortex   
+
+### Connections Visualized
+<img src="images/connectome_diagram.svg" style="width:50rem; display: block; margin-left: auto; margin-right: auto;"></img>
+
 ## Collaborators
 * Dr. Tanima Chatterjee
 
