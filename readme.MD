@@ -39,9 +39,7 @@ https://www.nature.com/articles/s41598-021-87587-z
 ## Results
 
 ### Top 10 Statistically Significant Curvature Differences
-<p style="color:red">
 It is important to note that some connections may occur in the same region of the brain, hence it may seem like a vertex is connected to itself which is not the case.
-</p>
 
 #### 5 Most Negative Curvatures 
 
