@@ -5,30 +5,25 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 fn main() {
-    let mut graph_asd: WeightedGraph = WeightedGraph::new_from_all(
-        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/",
-        "ASD",
-    );
+    let mut graph_asd: WeightedGraph =
+        WeightedGraph::new_from_all(human_connectome::DATA_DIR, "ASD");
     graph_asd.sparsify_matrix(0.2);
 
     let curvatures_asd = load_and_calc_curvature(
         &graph_asd.weighted_adjacency_matrix,
-        "/Users/alilavaee/Documents/DS210/human_connectome/results/ASD/",
+        &(human_connectome::SAVE_DIR.to_owned() + "ASD/"),
     );
 
-    let mut graph_td: WeightedGraph = WeightedGraph::new_from_all(
-        "/Users/alilavaee/Documents/DS210/human_connectome/UCLA_Autism/",
-        "TD",
-    );
+    let mut graph_td: WeightedGraph = WeightedGraph::new_from_all(human_connectome::DATA_DIR, "TD");
     graph_td.sparsify_matrix(0.2);
 
     let curvatures_td = load_and_calc_curvature(
         &graph_td.weighted_adjacency_matrix,
-        "/Users/alilavaee/Documents/DS210/human_connectome/results/TD/",
+        &(human_connectome::SAVE_DIR.to_owned() + "TD/"),
     );
 
     let curvature_diff: Vec<(String, String, f64)> = get_curvature_diff(
-        "/Users/alilavaee/Documents/DS210/human_connectome/region_names.txt",
+        &(human_connectome::DATA_DIR.to_owned() + "region_names.txt"),
         &curvatures_asd,
         &curvatures_td,
     );

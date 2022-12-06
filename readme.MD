@@ -3,7 +3,6 @@
 
 - [Human Connectome](#human-connectome)
   - [Inspiration](#inspiration)
-  - [Dataset](#dataset)
   - [Statistical Analysis](#statistical-analysis)
   - [Results](#results)
     - [Top 10 Statistically Significant Curvature Differences](#top-10-statistically-significant-curvature-differences)
@@ -11,6 +10,11 @@
       - [5 Most Positive Curvatures](#5-most-positive-curvatures)
   - [Discussion](#discussion)
     - [Connections Visualized](#connections-visualized)
+  - [Replicate Results](#replicate-results)
+    - [Clone the Repo](#clone-the-repo)
+    - [Download the dataset](#download-the-dataset)
+    - [Extract the dataset](#extract-the-dataset)
+    - [Run analysis](#run-analysis)
   - [Collaborators](#collaborators)
   - [References](#references)
 
@@ -22,9 +26,6 @@ Brain connectomics or brain network research has rapidly expanded using function
 3. it retains sufficient information to capture individual differences such as age, gender, intelligence quotient (IQ), or disease state
 
 In this project, the connectivity matrices of patients diagnosed with autism spectrum disorder (ASD) and typically developing (TD) autism are compared using graph statistical algorithms to determine regions of the brain associated with development of autism. 
-
-## Dataset
-[UCLA's Autism brain connectome dataset](http://umcd.humanconnectomeproject.org/umcd/default/get_study_data/UCLA_Autism)
 
 ## Statistical Analysis
 This analysis relies on a simplified 2-complex based order d Forman–Ricci curvature of an edge $e = \{u, v\} \in E$ is given by:
@@ -76,6 +77,51 @@ The ten connections between the brain yielding statistically significant results
 
 ### Connections Visualized
 <img src="images/connectome_diagram.svg" style="width:50rem; display: block; margin-left: auto; margin-right: auto;"></img>
+
+## Replicate Results
+### Clone the Repo 
+```bash
+git clone https://github.com/lavaman131/human_connectome.git
+```
+### Download the dataset
+[UCLA's Autism brain connectome dataset](http://umcd.humanconnectomeproject.org/umcd/default/get_study_data/UCLA_Autism)
+### Extract the dataset
+Unzip the downloaded file
+### Run analysis
+1. Locate the `lib.rs` script in the relative path `human_connectome/src/lib.rs` and change the absolute paths to the appropriate locations:
+```rust
+// initialize paths HERE
+// the absolute path of your data folder
+pub const DATA_DIR: &str = "ABSOLUTE PATH OF UCLA_AUTISM DATASET GOES HERE";
+/* the absolute path of the directory 
+where you want to store results of analysis*/
+pub const SAVE_DIR: &str = "ABSOLUTE PATH OF WHERE YOU WANT TO STORE RESULTS GOES HERE";
+```
+2. Run the `save_files.rs` script by entering the following command:
+```bash
+cargo run --bin save_files --release
+```
+3. Run the `main.rs` script to analyze the saved data: 
+```bash
+cargo run --bin main --release
+```
+This will output the top 5 most positive and top 5 most negative edges based on curvature difference:
+```bash
+Top 10 Statistically significant curvature differences:
+5 Most Negative Curvatures:
+Regions: ("Right Putamen", "Right Insular Cortex")      Curvature Difference: -2331330.433152141
+Regions: ("Right Insular Cortex", "Right Insular Cortex")       Curvature Difference: -1994182.8538039196
+Regions: ("Right Frontal Pole", "Right Frontal Orbital Cortex") Curvature Difference: -1845748.8731592936
+Regions: ("Right Frontal Pole", "Right Frontal Pole")   Curvature Difference: -1716334.5267126393
+Regions: ("Right Insular Cortex", "Right Insular Cortex")       Curvature Difference: -1614932.5721171317
+5 Most Positive Curvatures:
+Regions: ("Left Central Opercular Cortex", "Left Central Opercular Cortex")     Curvature Difference: 1934234.5367499162
+Regions: ("Right Insular Cortex", "Right Putamen")      Curvature Difference: 1971224.916725241
+Regions: ("Left Thalamus", "Brain-Stem")        Curvature Difference: 2294358.294582237
+Regions: ("Right Frontal Pole", "Right Frontal Orbital Cortex") Curvature Difference: 2565673.39796964
+Regions: ("Left Middle Temporal Gyrus posterior division", "Left Middle Temporal Gyrus posterior division")     Curvature Difference: 3425965.9113210947
+```
+
 
 ## Collaborators
 * Dr. Tanima Chatterjee
