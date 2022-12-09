@@ -29,15 +29,13 @@ Brain connectomics or brain network research has rapidly expanded using function
 In this project, the connectivity matrices of patients diagnosed with autism spectrum disorder (ASD) and typically developing (TD) autism are compared using graph statistical algorithms to determine regions of the brain associated with development of autism. 
 
 ## Statistical Analysis
-This analysis relies on a simplified 2-complex based order d Forman–Ricci curvature of an edge $e = \{u, v\} \in E$ is given by:
+This analysis relies on a simplified 2-complex based order d Forman–Ricci curvature [[1]](#1) of an edge $e = \{u, v\} \in E$ is given by:
 
 $$\mathfrak{C}_G^{2, d}(e) \stackrel{\text { def }}{=} \mathfrak{C}_G^{2, d}(u, v)=\omega(e)\left[\left(\sum_{e \sim f_d^2} \frac{\omega(e)}{\omega\left(f_d^2\right)}+\sum_{v \sim e} \frac{\omega(v)}{\omega(e)}\right)-\sum_{e^{\prime} \| e, e^{\prime}, e \sim f_d^2} \frac{\sqrt{\omega(e) \omega\left(e^{\prime}\right)}}{\omega\left(f_d^2\right)}\right]$$
 
 The difference of the curvatures is found between a pair of autism spectrum disorder (ASD) and typically developing (TD) autism connectivity matrices each constructed by taking the aggregated mean of all such similar samples corresponding to each diagnosis.
 
-More information about the methodology can be found in the following paper:
-https://www.nature.com/articles/s41598-021-87587-z
-
+M
 ## Results
 
 ### Top 10 Statistically Significant Curvature Differences
@@ -132,4 +130,4 @@ cargo test
 * Dr. Tanima Chatterjee
 
 ## References
-Chatterjee, T., Albert, R., Thapliyal, S. *et al.* Detecting network anomalies using Forman–Ricci curvature and a case study for human brain networks. *Sci Rep* **11**, 8121 (2021). https://doi.org/10.1038/s41598-021-87587-z
+<a id="1">[1]</a> Chatterjee, T., Albert, R., Thapliyal, S. *et al.* Detecting network anomalies using Forman–Ricci curvature and a case study for human brain networks. *Sci Rep* **11**, 8121 (2021). https://doi.org/10.1038/s41598-021-87587-z
