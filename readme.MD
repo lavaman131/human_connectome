@@ -35,7 +35,6 @@ $$\mathfrak{C}_G^{2, d}(e) \stackrel{\text { def }}{=} \mathfrak{C}_G^{2, d}(u, 
 
 The difference of the curvatures is found between a pair of autism spectrum disorder (ASD) and typically developing (TD) autism connectivity matrices each constructed by taking the aggregated mean of all such similar samples corresponding to each diagnosis.
 
-M
 ## Results
 
 ### Top 10 Statistically Significant Curvature Differences
