@@ -6,7 +6,3 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-[[test]]
-name = "integration_test"
-path = "src/tests/integration_test.rs"

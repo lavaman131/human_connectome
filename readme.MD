@@ -15,6 +15,7 @@
     - [Download the dataset](#download-the-dataset)
     - [Extract the dataset](#extract-the-dataset)
     - [Run analysis](#run-analysis)
+  - [Unit Tests](#unit-tests)
   - [Collaborators](#collaborators)
   - [References](#references)
 
@@ -122,6 +123,10 @@ Regions: ("Right Frontal Pole", "Right Frontal Orbital Cortex") Curvature Differ
 Regions: ("Left Middle Temporal Gyrus posterior division", "Left Middle Temporal Gyrus posterior division")     Curvature Difference: 3425965.9113210947
 ```
 
+## Unit Tests
+```rust
+cargo test
+```
 
 ## Collaborators
 * Dr. Tanima Chatterjee

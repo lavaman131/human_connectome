@@ -85,3 +85,34 @@ impl WeightedGraph {
         marked[u] = false;
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::graph::WeightedGraph;
+
+    #[test]
+    fn check_n_cycles() {
+        let graph: WeightedGraph = WeightedGraph::new_from_vec(vec![
+            vec![0.0, 1.0, 1.0],
+            vec![1.0, 0.0, 1.0],
+            vec![1.0, 1.0, 0.0],
+        ]);
+        assert_eq!(vec![vec![(0, 1), (1, 2), (2, 0)]], graph.find_n_cycles(3));
+
+        let graph2: WeightedGraph = WeightedGraph::new_from_vec(vec![
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+            vec![1.0, 0.0, 1.0, 0.0, 1.0],
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+            vec![1.0, 0.0, 1.0, 0.0, 1.0],
+            vec![0.0, 1.0, 0.0, 1.0, 0.0],
+        ]);
+        assert_eq!(
+            vec![
+                vec![(0, 1), (1, 2), (2, 3), (3, 0)],
+                vec![(0, 3), (3, 2), (2, 1), (1, 0)],
+                vec![(1, 2), (2, 3), (3, 4), (4, 1)]
+            ],
+            graph2.find_n_cycles(4)
+        );
+    }
+}
