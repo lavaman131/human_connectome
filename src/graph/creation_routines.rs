@@ -1,4 +1,3 @@
-#![allow(non_snake_case)]
 use super::WeightedGraph;
 use std::fs::{self, File};
 use std::io::{BufRead, BufReader};
